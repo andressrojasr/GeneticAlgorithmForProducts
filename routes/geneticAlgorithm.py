@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-import algorithm.genetic as genetic
+import algorithm.algorithm as algorithm
 
 algorithm_bp = Blueprint('algorithm', __name__, url_prefix='/algorithm')
 
@@ -13,5 +13,6 @@ def createProduct():
     generaciones = data['generaciones']
     volumenMaximo = data['volumenMaximo']
     alpha = data['alpha']
-    best, bestFit = genetic.initializeGenetic(nombre, volumen, poblacion, generaciones, volumenMaximo, alpha)
-    return jsonify({'Mejor combinación': best, 'Mejor ganancia': bestFit}), 201
+    idCategory = data['idCategory']
+    best, bestFit, ids = algorithm.initializeGenetic_int(nombre, volumen, poblacion, generaciones, volumenMaximo, alpha, idCategory)
+    return jsonify({'Mejor combinación': best, "ids": ids, 'Mejor ganancia': bestFit}), 201
