@@ -67,13 +67,18 @@ def eliminarProducto(id):
     finally:
         conexion.close()
         
-def getProducts():
+def getProducts(category):
     conexion = conectar_base_datos()
     if conexion:
         cursor = conexion.cursor()
-        query = """SELECT p.id, p.nombre, p.volumen, p.frecuencia, p.ganancia, p.url, c.id AS idCategoria, c.nombre AS nombreCategoria FROM productos p JOIN categorias c ON p."idCategoria" = c.id ORDER BY p.id ASC"""
-        cursor.execute(query)
+        query = """SELECT p.id, p.nombre, p.volumen, p.frecuencia, p.ganancia, p.url, c.id AS idCategoria, c.nombre AS nombreCategoria FROM productos p JOIN categorias c ON p."idCategoria" = c.id WHERE c.id = %s ORDER BY p.id ASC"""
+        cursor.execute(query, (category, ))
         productos_raw = cursor.fetchall()
         cursor.close()
         conexion.close()
         return productos_raw
+    
+if __name__ == "__main__":
+    # Test the functions here if needed
+    pass
+from controller.supabase import conectar_base_datos
