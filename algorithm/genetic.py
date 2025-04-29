@@ -43,13 +43,13 @@ def cruce(p1, p2, p_cross=0.8):
 def mutacion(chromo, p_mut=0.02):
     return [1-g if random.random()<p_mut else g for g in chromo]
 
-def initializeGenetic(p_cross, p_mut, P, G_max, V_max, alpha):
-    productos = p.getProducts()
-    volumes = extract_column(productos, 2, default=0)  # volúmenes (columna índice 4)
+def initializeGenetic(p_cross, p_mut, P, G_max, V_max, alpha,productos):
+    print("Productos seleccionados:", productos)
+    volumes = extract_column(productos, 'volumen', default=0)  # volúmenes (columna índice 4)
     print ("Volúmenes:", volumes)
-    frec    = extract_column(productos, 3, default=0)  # frecuencia o precio (columna índice 2)
+    frec    = extract_column(productos,  'frecuencia', default=0)  # frecuencia o precio (columna índice 2)
     print ("Frecuencias:", frec)
-    marg    = extract_column(productos, 4, default=0)  # margen (columna índice 3)
+    marg    = extract_column(productos,  'ganancia', default=0)  # margen (columna índice 3)
     print ("Margenes:", marg)
     N = len(volumes)  # número de productos
     # Evolución de la población
@@ -70,7 +70,8 @@ def initializeGenetic(p_cross, p_mut, P, G_max, V_max, alpha):
             h1, h2 = cruce(padre1, padre2, p_cross)
             nueva += [mutacion(h1, p_mut), mutacion(h2, p_mut)]
         pobl = nueva[:P]
-
+    print("Mejor ganancia:", best_fit)
+    print("Mejor combinación:", best)
     return best, best_fit
         # # Resultados finales
         # print("Mejor ganancia:", best_fit)
