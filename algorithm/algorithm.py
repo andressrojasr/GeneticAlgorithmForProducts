@@ -39,15 +39,15 @@ def mutacion_int(chrom, max_q_list, p_mut=0.02):
             new.append(q)
     return new
 
-def initializeGenetic_int(p_cross, p_mut, P, G_max, V_max, alpha, idCategory):
-    productos = p.getProducts(idCategory)
-    ids    = extract_column(productos, 0)
-    volumes = extract_column(productos, 2, default=0)
-    marg    = extract_column(productos, 4, default=0)
+def initializeGenetic_int(p_cross, p_mut, P, G_max, V_max, alpha, idCategory, productos):
+    print(f"Productos encontrados: {productos}")
+
+    ids    = extract_column(productos, 'id')
+    volumes = extract_column(productos, 'volumen', default=0)
+    marg    = extract_column(productos, 'ganancia', default=0)
     N = len(volumes)
     # Máximos por producto para no superar solo con uno
-    max_q = [V_max // v if v>0 else 0 for v in volumes]
-
+    max_q = [int(V_max // v) if v > 0 else 0 for v in volumes]
     pobl = inicializa_poblacion_int(P, max_q)
     best, best_fit = None, float('-inf')
 
@@ -66,5 +66,8 @@ def initializeGenetic_int(p_cross, p_mut, P, G_max, V_max, alpha, idCategory):
             nueva.append(mutacion_int(h1, max_q, p_mut))
             nueva.append(mutacion_int(h2, max_q, p_mut))
         pobl = nueva[:P]
+    
+    print("Mejor gananica:" ,best_fit)
+    print("Mejor combinacion:" , best)
 
     return best, best_fit, ids

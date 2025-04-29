@@ -23,6 +23,7 @@ def createProduct():
     generaciones = data['generaciones']
     volumenMaximo = data['volumenMaximo']
     alpha = data['alpha']
-    idCategory = data['idCategory']
-    best, bestFit, ids = algorithm.initializeGenetic_int(nombre, volumen, poblacion, generaciones, volumenMaximo, alpha, idCategory)
+    idCategory = data['categoriaSeleccionada']
+    productos = data['productos']
+    best, bestFit, ids = algorithm.initializeGenetic_int(nombre, volumen, poblacion, generaciones, volumenMaximo, alpha, idCategory, productos)
     return jsonify({'Mejor combinación': best, "ids": ids, 'Mejor ganancia': bestFit}), 201
