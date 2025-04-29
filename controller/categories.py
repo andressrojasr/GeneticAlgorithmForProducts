@@ -58,7 +58,7 @@ def eliminarCategoria(id):
 
     try:
         with conexion.cursor() as cursor:
-            cursor.execute("DELETE FROM categorias WHERE id = %s", (id))
+            cursor.execute("DELETE FROM categorias WHERE id = %s", (id,))
             conexion.commit()
         return True
     except psycopg2.Error as err:

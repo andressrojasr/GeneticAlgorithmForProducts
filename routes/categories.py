@@ -8,7 +8,7 @@ def getCategory():
     categorias = c.obtenerCategorias()    
     return jsonify(categorias), 200
 
-@categories_bp.route('/', methods=['POST'])
+@categories_bp.route('/', methods=['POST' , 'OPTIONS'] )
 def createCategory():
     data = request.get_json()
     nombre = data['nombre']
@@ -16,7 +16,7 @@ def createCategory():
     if result == True:
         return jsonify({'mensaje': 'Categoría creada exitosamente', 'data': data}), 201
     else:
-        return jsonify({'error': f'Error al crear categoría {result}'}), 400
+        return jsonify({'error': f'Error al crear categoría , error.response ? error.response.data : error.message'}), 400
 
 @categories_bp.route('/', methods=['PUT'])
 def updateCategory():
